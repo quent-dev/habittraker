@@ -1,6 +1,7 @@
 import express from 'express';
 import { json } from 'body-parser';
 import { habitRoutes } from './routes/habitRoutes';
+import { completionRoutes } from './routes/completionRoutes';
 import { initializeDatabase } from './db/database';
 
 const app = express();
@@ -9,6 +10,7 @@ const app = express();
 app.use(json());
 
 // Routes
+app.use('/api', completionRoutes);
 app.use('/api/habits', habitRoutes);
 
 // Error handling middleware

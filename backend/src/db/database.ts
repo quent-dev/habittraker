@@ -20,6 +20,9 @@ async function createTables(): Promise<void> {
     if (!db) throw new Error('Database not initialized');
 
     await db.exec(`
+        -- Set timezone to local
+        PRAGMA timezone_override = localtime;
+
         CREATE TABLE IF NOT EXISTS habits (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
@@ -61,4 +64,9 @@ export async function getDatabase(): Promise<Database> {
         return initializeDatabase();
     }
     return db;
+}
+
+// Add a helper function for date handling
+export function toLocalDateTime(date: Date = new Date()): string {
+    return date.toISOString().slice(0, 19).replace('T', ' ');
 } 
